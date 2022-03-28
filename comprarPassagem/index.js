@@ -9,7 +9,7 @@ const con = mysql.createConnection({
 });
 
 
-let resultReturn = "{ 'status':'ok', 'id': [";
+let resultReturn = "";
 
 exports.handler = (event, context, callback) => {
   
@@ -43,11 +43,13 @@ function adicionarPassagem(event, callback){
     if (err) {
       throw err;
     }
+    resultReturn = "{ 'status':'ok', 'id': [";
     for (var i = 0; i < res.affectedRows; i++) {
       resultReturn += (res.insertId-i) + "," ;
     }
     resultReturn = resultReturn.slice(0,-1);
     resultReturn += "]}";
+    //callback(null,resultReturn);
     atualizarAssentos(event,callback);
   });
 }
